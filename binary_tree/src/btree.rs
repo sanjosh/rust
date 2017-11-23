@@ -1,7 +1,9 @@
 use std::cmp::Ordering;
 
+#[allow(dead_code)]
+
 #[derive(Debug)]
-enum BTree<T: Ord> {
+pub enum BTree<T: Ord> {
 	Leaf {
 		v: T,
 		l: Box<BTree<T>>,
@@ -11,11 +13,11 @@ enum BTree<T: Ord> {
 }
 
 impl<T: Ord> BTree<T> {
-	fn new() -> BTree<T> {
+	pub fn new() -> BTree<T> {
 		BTree::Empty
 	}
 
-	fn insert(&mut self, nv: T) {
+	pub fn insert(&mut self, nv: T) {
 		match self {
 			&mut BTree::Leaf { ref v, ref mut l, ref mut r } => {
 				match nv.cmp(v) {
@@ -30,14 +32,14 @@ impl<T: Ord> BTree<T> {
 		};
 	}
 
-	fn is_empty(&self) -> bool {
+	pub fn is_empty(&self) -> bool {
 		match self {
 			&BTree::Leaf { .. } => false,
 			&BTree::Empty => true,
 		}
 	}
 
-	fn find(&self, fv: T) -> bool {
+	pub fn find(&self, fv: T) -> bool {
 		match self {
 			&BTree::Leaf { ref v, ref l, ref r } => {
 				match fv.cmp(v) {
